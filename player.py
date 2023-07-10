@@ -8,7 +8,7 @@ Y = 1
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, obstacle_sprites):
         super().__init__(groups)
-        self.image = pygame.image.load('../graphics/test/player.jpg').convert_alpha()
+        self.image = pygame.image.load('C:/Users/szomi/Dropbox/Komputer/Documents/GitHub/AIgame/graphics/test/player.png').convert_alpha()
         self.rect = self.image.get_rect(topleft = pos)
         self.direction = [0, 0]
         self.speed = 5
@@ -37,11 +37,12 @@ class Player(pygame.sprite.Sprite):
                         self.rect.left = sprite.rect.right
         
         if direction == "vertical":
-            if sprite.rect.colliderect(self.rect):
-                    if self.direction[Y] > 0:
-                        self.rect.bottom = sprite.rect.top
-                    if self.direction[Y] < 0:
-                        self.rect.top = sprite.rect.bottom
+            for sprite in self.obstacle_sprites:
+                if sprite.rect.colliderect(self.rect):
+                        if self.direction[Y] > 0:
+                            self.rect.bottom = sprite.rect.top
+                        if self.direction[Y] < 0:
+                            self.rect.top = sprite.rect.bottom
             
     def move(self, speed):
         magnitude = math.sqrt(self.direction[X]*self.direction[X]+self.direction[Y]*self.direction[Y])

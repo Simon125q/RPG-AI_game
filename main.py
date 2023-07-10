@@ -23,11 +23,10 @@ class Game:
                     if event.key == pygame.K_ESCAPE:
                         pygame.quit()
                         sys.exit()
-                self.screen.fill('black')
-                self.level.run()
-                debug(f"fps: {FPS}")
-                pygame.display.update()
-                self.clock.tick(FPS)
+            self.screen.fill('black')
+            self.level.run()
+            pygame.display.update()
+            self.clock.tick(FPS)
 
 if __name__ == "__main__":
     game = Game()
