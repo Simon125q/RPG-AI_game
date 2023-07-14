@@ -1,4 +1,5 @@
 import pygame
+from support import *
 from settings import *
 from tile import Tile
 from player import Player
@@ -17,17 +18,18 @@ class Level:
         self.create_map()
         
     def create_map(self):
-        for row_index, raw in enumerate(WORLD_MAP):
-            for col_index, col in enumerate(raw):
-                x = col_index * TILESIZE
-                y = row_index * TILESIZE
-                if col == '#':
-                    # print rock
-                    Tile((x,y), [self.visible_sprites, self.obstacle_sprites])
-                if col == 'p':
-                    # print player
-                    self.player = Player((x, y), [self.visible_sprites], self.obstacle_sprites)
-                
+        layouts = {
+            'boundary': import_csv_layout('C:/Users/szomi/Dropbox/Komputer/Documents/GitHub/AIgame/map/map_FloorBlocks.csv')
+        }
+        for style, layout in layouts.items():
+            for row_index, row in enumerate(layout):
+                for col_index, col in enumerate(row):
+                    if col != '-1':
+                        x = col_index * TILESIZE
+                        y = row_index * TILESIZE
+                        if style == 'boundary':
+                            Tile((x,y), [self.visible_sprites, self.obstacle_sprites], "invisible")
+        self.player = Player((2000, 1440), [self.visible_sprites], self.obstacle_sprites)
     def run(self):
         #update and draw the game
         
@@ -42,10 +44,18 @@ class YsortCameraGroup(pygame.sprite.Group):
         self.half_height = self.display_surface.get_size()[1]//2
         self.offset = pygame.math.Vector2()
         
+        # create the floor
+        self.floor_surf = pygame.image.load('C:/Users/szomi/Dropbox/Komputer/Documents/GitHub/AIgame/graphics/tilemap/ground.png').convert()
+        self.floor_rect = self.floor_surf.get_rect(topleft = (0, 0))
+        
     def custom_draw(self, player):
         
         self.offset.y = self.half_height - player.rect.centery
         self.offset.x = self.half_width - player.rect.centerx
+        
+        #draw floor
+        floor_offset_pos = self.floor_rect.topleft + self.offset
+        self.display_surface.blit(self.floor_surf, floor_offset_pos)
         
         for sprite in sorted(self.sprites(), key = lambda sprite: sprite.rect.centery):
             offset_pos = sprite.rect.topleft + self.offset
