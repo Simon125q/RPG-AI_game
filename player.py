@@ -13,7 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.direction = [0, 0]
         self.speed = 5
         self.obstacle_sprites = obstacle_sprites
-        self.hitbox = self.rect.inflate(-1, -26)
+        self.hitbox = self.rect.inflate(-5, -30)
     def input(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
