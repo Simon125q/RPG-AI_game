@@ -12,6 +12,6 @@ class Tile(pygame.sprite.Sprite):
         else:
             self.rect = self.image.get_rect(topleft = pos)
             if sprite_type == "invisible":
-                self.hitbox = self.rect.inflate(-20, -30)
+                self.hitbox = self.rect.inflate(-22, -30)
             else:
-                self.hitbox = self.rect.inflate(-4, -10)
+                self.hitbox = self.rect.inflate(-6, -10)
