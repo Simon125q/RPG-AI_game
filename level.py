@@ -5,17 +5,21 @@ from tile import Tile
 from player import Player
 from debug import debug
 from random import choice
+from weapon import Weapon
 
 class Level:
     def __init__(self):
         
-        #get the display surface
+        # get the display surface
         self.display_surface = pygame.display.get_surface()
         
-        #sprite group setup
+        # sprite group setup
         self.visible_sprites = YsortCameraGroup()
         self.obstacle_sprites = pygame.sprite.Group()
-
+        
+        # attack sprites
+        self.current_attack = None
+        # sprites setup
         self.create_map()
         
     def create_map(self):
@@ -43,7 +47,16 @@ class Level:
                             surf = graphics['objects'][int(col)]
                             Tile((x,y), [self.visible_sprites, self.obstacle_sprites], 'object', surf)
                             
-        self.player = Player((2000, 1440), [self.visible_sprites], self.obstacle_sprites)
+        self.player = Player((2000, 1440), [self.visible_sprites], self.obstacle_sprites, self.create_attack, self.destroy_attack)
+    
+    def destroy_attack(self):
+        if self.current_attack:
+            self.current_attack.kill()
+        self.current_attack = None
+        
+    def create_attack(self):
+        self.current_attack = Weapon(self.player, [self.visible_sprites])
+        
     def run(self):
         #update and draw the game
         
@@ -51,6 +64,7 @@ class Level:
         self.visible_sprites.update()
         
 class YsortCameraGroup(pygame.sprite.Group):
+    
     def __init__(self):
         super().__init__()
         self.display_surface = pygame.display.get_surface()
