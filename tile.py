@@ -8,7 +8,7 @@ class Tile(pygame.sprite.Sprite):
         self.image = surface
         if sprite_type == "object":
             self.rect = self.image.get_rect(topleft = (pos[0], pos[1] - TILESIZE))
-            self.hitbox = self.rect.inflate(-6, -34)
+            self.hitbox = self.rect.inflate(-12, -34)
         else:
             self.rect = self.image.get_rect(topleft = pos)
             if sprite_type == "invisible":
