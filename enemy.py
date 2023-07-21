@@ -5,7 +5,7 @@ from support import *
 from debug import debug
 
 class Enemy(Entity):
-    def __init__(self, monster_name, pos, groups, obstacle_sprites, damage_player):
+    def __init__(self, monster_name, pos, groups, obstacle_sprites, damage_player, trigger_death_particles):
         super().__init__(groups)
         self.sprite_type = 'enemy'
         
@@ -36,6 +36,7 @@ class Enemy(Entity):
         self.attack_time = None
         self.attack_cooldown = 400
         self.damage_player = damage_player
+        self.trigger_death_particles = trigger_death_particles
         
         # inbincibility timer
         self.vulnerable = True
@@ -122,7 +123,8 @@ class Enemy(Entity):
     
     def check_death(self):
         if self.health <= 0:
-             self.kill()
+            self.kill()
+            self.trigger_death_particles(self.rect.center, self.monster_name) 
                        
     def hit_reaction(self):
         if not self.vulnerable:
