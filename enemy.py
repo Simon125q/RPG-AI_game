@@ -3,8 +3,10 @@ from settings import *
 from entity import Entity
 from support import *
 from debug import debug
+from random import randint
 
 class Enemy(Entity):
+    
     def __init__(self, monster_name, pos, groups, obstacle_sprites, damage_player, trigger_death_particles):
         super().__init__(groups)
         self.sprite_type = 'enemy'
@@ -12,24 +14,30 @@ class Enemy(Entity):
         # graphics setup
         self.import_graphics(monster_name)
         self.status = 'idle'
+        self.player_noticed = False
         self.image = self.animations[self.status][self.frame_index]
         
         # movement
         self.rect = self.image.get_rect(topleft = pos)
         self.hitbox = self.rect.inflate(-4, -12)
         self.obstacle_sprites = obstacle_sprites
+        self.change_direction = True
+        self.walk_time = None
+        self.walk_cooldown = 600
+        self.walk_x = 0
+        self.walk_y = 0
         
         # stats
         self.monster_name = monster_name
-        monster_info = monster_data[self.monster_name]
-        self.health = monster_info['health']
-        self.exp = monster_info['exp']
-        self.speed = monster_info['speed']
-        self.attack_damage = monster_info['damage']
-        self.resistance = monster_info['resistance']
-        self.attack_radius = monster_info['attack_radius']
-        self.notice_radius = monster_info['notice_radius']
-        self.attack_type = monster_info['attack_type']
+        self.monster_info = monster_data[self.monster_name]
+        self.health = self.monster_info['health']
+        self.exp = self.monster_info['exp']
+        self.speed = self.monster_info['speed']
+        self.attack_damage = self.monster_info['damage']
+        self.resistance = self.monster_info['resistance']
+        self.attack_radius = self.monster_info['attack_radius']
+        self.notice_radius = self.monster_info['notice_radius']
+        self.attack_type = self.monster_info['attack_type']
         
         # player interaction
         self.can_attack = True
@@ -42,8 +50,7 @@ class Enemy(Entity):
         self.vulnerable = True
         self.hit_time = None
         self.invincibility_duration = 400
-        
-        
+           
     def import_graphics(self, name):
         self.animations = {'idle':[], 'move':[], 'attack':[]}
         main_path = f'./graphics/monsters/{name}/'
@@ -69,20 +76,35 @@ class Enemy(Entity):
             if self.status != "attack":
                 self.frame_index = 0
             self.status = 'attack'
+            self.player_noticed = True
         elif distance <= self.notice_radius:
             self.status = 'move'
+            self.player_noticed = True
         else:
-            self.status = 'idle'
+            self.player_noticed = False
     
     def actions(self, player):
         if self.status == 'attack':
+            self.speed = self.monster_info['speed']
             self.attack_time = pygame.time.get_ticks()
             self.damage_player(self.attack_damage, self.attack_type)
-        elif self.status == 'move':
-            self.direction = self.get_player_direction_and_distance(player)[1]
-            
+        elif self.status == 'move' and self.player_noticed:
+            self.speed = self.monster_info['speed']
+            self.direction = self.get_player_direction_and_distance(player)[1]  
         else:
-            self.direction = pygame.math.Vector2()
+            self.speed = self.monster_info['speed'] // 2
+            if self.change_direction:
+                self.walk_x = randint(-1, 1)
+                self.walk_y = randint(-1, 1)
+                if self.walk_x == 0 and self.walk_y == 0:
+                    self.status = 'idle'
+                else: 
+                    self.status = 'move'
+                    self.player_noticed = False
+                self.change_direction = False
+                self.walk_time = pygame.time.get_ticks()
+                
+            self.direction = pygame.math.Vector2(self.walk_x, self.walk_y)
     
     def animate(self):
         animation = self.animations[self.status]
@@ -109,6 +131,9 @@ class Enemy(Entity):
         if not self.vulnerable:
             if current_time - self.hit_time >= self.invincibility_duration:
                 self.vulnerable = True
+        if not self.change_direction:
+            if current_time - self.walk_time >= self.walk_cooldown:
+                self.change_direction = True
     
     def get_damage(self, player, attack_type):
         if self.vulnerable:
@@ -116,7 +141,7 @@ class Enemy(Entity):
             if attack_type == 'weapon':
                 self.health -= player.get_full_weapon_damage()
             else:
-                pass
+                self.health -= player.get_full_magic_damage()
             self.hit_time = pygame.time.get_ticks()
             self.vulnerable = False
             self.check_death()

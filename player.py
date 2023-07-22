@@ -100,7 +100,7 @@ class Player(Entity):
                 self.create_magic(style, strength, cost)
             
             # magic choosing
-            if (mouse[1] or keys[pygame.K_q]) and self.can_switch_magic:
+            if (keys[pygame.K_q]) and self.can_switch_magic:
                 self.can_switch_magic = False
                 self.magic_switch_time = pygame.time.get_ticks()
                 if self.magic_index < len(list(magic_data.keys())) - 1:
@@ -195,9 +195,21 @@ class Player(Entity):
         weapon_damage = weapon_data[self.weapon]['damage']
         return base_damage + weapon_damage
     
+    def get_full_magic_damage(self):
+        base_damage = self.stats['magic']
+        spell_damage = magic_data[self.magic]['strength']
+        return base_damage + spell_damage
+        
+    def energy_recovery(self):
+        if self.energy < self.stats['energy']:
+            self.energy += 0.01 * self.stats['magic'] * 0.8
+        else:
+            self.energy = self.stats['energy']
+            
     def update(self):
         self.input()
         self.cooldowns()
         self.get_status()
         self.animate()
         self.move(self.speed)
+        self.energy_recovery()

@@ -8,7 +8,7 @@ from random import choice, randint
 from weapon import Weapon
 from ui import UI
 from enemy import Enemy
-from paritcles import AnimationPlayer
+from particles import AnimationPlayer
 from magic import PlayerMagic
 
 PLAYER = '394'
@@ -98,12 +98,9 @@ class Level:
     
     def create_magic(self, style, strength, cost):
         if style == 'heal':
-            self.magic_player.heal()
+            self.magic_player.heal(self.player, strength, cost, [self.visible_sprites])
         elif style == 'flame':
-            pass
-        print(style)
-        print(strength)
-        print(cost)
+            self.magic_player.flame(self.player, cost, [self.visible_sprites, self.attack_sprites])
         
     def player_attack_logic(self):
         if self.attack_sprites:
@@ -125,10 +122,10 @@ class Level:
             self.player.health -= amount
             self.player.vulnerable = False
             self.player.hurt_time = pygame.time.get_ticks()
-            self.animation_player.create_particles(attack_type, self.player.rect.center, [self.visible_sprites])
+            self.animation_player.create_particles(attack_type, self.player.rect.center, [self.visible_sprites], 'damage')
     
     def trigger_death_particles(self, pos, particle_type):
-        self.animation_player.create_particles(particle_type, pos, [self.visible_sprites])
+        self.animation_player.create_particles(particle_type, pos, [self.visible_sprites], 'death')
                          
     def run(self):
         #update and draw the game

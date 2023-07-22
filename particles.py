@@ -50,15 +50,16 @@ class AnimationPlayer:
     
     def create_grass_particles(self, pos, groups):
         animation_frames = choice(self.frames['leaf'])
-        ParticleEffect(pos, animation_frames, groups)
+        ParticleEffect(pos, animation_frames, groups, 'leaf')
     
-    def create_particles(self, animation_type, pos, groups):
+    def create_particles(self, animation_type, pos, groups, sprite_type):
         animation_frames = self.frames[animation_type]
-        ParticleEffect(pos, animation_frames, groups)
+        ParticleEffect(pos, animation_frames, groups, sprite_type)
     
 class ParticleEffect(pygame.sprite.Sprite):
-    def __init__(self, pos, animation_frames, groups):
+    def __init__(self, pos, animation_frames, groups, sprite_type):
         super().__init__(groups)
+        self.sprite_type = sprite_type
         self.frame_index = 0
         self.animation_speed = 0.15
         self.frames = animation_frames
