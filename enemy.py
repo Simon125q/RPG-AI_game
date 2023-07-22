@@ -96,11 +96,11 @@ class Enemy(Entity):
             if self.change_direction:
                 self.walk_x = randint(-1, 1)
                 self.walk_y = randint(-1, 1)
-                if self.walk_x == 0 and self.walk_y == 0:
+                if (self.walk_x == 0 and self.walk_y == 0) or self.monster_name == 'spirit':
                     self.status = 'idle'
                 else: 
                     self.status = 'move'
-                    self.player_noticed = False
+                self.player_noticed = False
                 self.change_direction = False
                 self.walk_time = pygame.time.get_ticks()
                 

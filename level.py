@@ -75,7 +75,8 @@ class Level:
                                                     self.obstacle_sprites, 
                                                     self.create_attack, 
                                                     self.destroy_attack,
-                                                    self.create_magic)
+                                                    self.create_magic,
+                                                    self.footstep_particles)
                             else:
                                 if col == BAMBOO: monster_name = 'bamboo'
                                 elif col == SPIRIT: monster_name = 'spirit'
@@ -126,6 +127,16 @@ class Level:
     
     def trigger_death_particles(self, pos, particle_type):
         self.animation_player.create_particles(particle_type, pos, [self.visible_sprites], 'death')
+        
+    def footstep_particles(self, pos, direction):
+        if direction == 'up':
+            self.animation_player.create_particles('footstep_up', pos, [self.visible_sprites], 'footstep')
+        elif direction == 'down':
+            self.animation_player.create_particles('footstep_down', pos, [self.visible_sprites], 'footstep')
+        elif direction == 'right':
+            self.animation_player.create_particles('footstep_right', pos, [self.visible_sprites], 'footstep')
+        else:
+            self.animation_player.create_particles('footstep_left', pos, [self.visible_sprites], 'footstep')
                          
     def run(self):
         #update and draw the game

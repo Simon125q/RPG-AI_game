@@ -6,22 +6,27 @@ class AnimationPlayer:
     def __init__(self):
         self.frames = {
 			# magic
-			'flame': import_folder('./graphics/particles/flame/frames'),
-			'aura': import_folder('./graphics/particles/aura'),
-			'heal': import_folder('./graphics/particles/heal/frames'),
+			'flame': (import_folder('./graphics/particles/flame/frames'),),
+			'aura': (import_folder('./graphics/particles/aura'),),
+			'heal': (import_folder('./graphics/particles/heal/frames'),),
 			
 			# attacks 
-			'claw': import_folder('./graphics/particles/claw'),
-			'slash': import_folder('./graphics/particles/slash'),
-			'sparkle': import_folder('./graphics/particles/sparkle'),
-			'leaf_attack': import_folder('./graphics/particles/leaf_attack'),
-			'thunder': import_folder('./graphics/particles/thunder'),
+			'claw': (import_folder('./graphics/particles/claw'), 
+            	self.reflect_images(import_folder('./graphics/particles/claw'))),
+			'slash': (import_folder('./graphics/particles/slash'), 
+             	self.reflect_images(import_folder('./graphics/particles/slash'))),
+			'sparkle': (import_folder('./graphics/particles/sparkle'), 
+               	self.reflect_images(import_folder('./graphics/particles/sparkle'))),
+			'leaf_attack': (import_folder('./graphics/particles/leaf_attack'), 
+                self.reflect_images(import_folder('./graphics/particles/leaf_attack'))),
+			'thunder': (import_folder('./graphics/particles/thunder'), 
+               	self.reflect_images(import_folder('./graphics/particles/thunder'))),
 
 			# monster deaths
-			'squid': import_folder('./graphics/particles/smoke_orange'),
-			'raccoon': import_folder('./graphics/particles/raccoon'),
-			'spirit': import_folder('./graphics/particles/nova'),
-			'bamboo': import_folder('./graphics/particles/bamboo'),
+			'squid': (import_folder('./graphics/particles/smoke_orange'),),
+			'raccoon': (import_folder('./graphics/particles/raccoon'),),
+			'spirit': (import_folder('./graphics/particles/nova'),),
+			'bamboo': (import_folder('./graphics/particles/bamboo'),),
 			
 			# leafs 
 			'leaf': (
@@ -37,7 +42,13 @@ class AnimationPlayer:
 				self.reflect_images(import_folder('./graphics/particles/leaf4')),
 				self.reflect_images(import_folder('./graphics/particles/leaf5')),
 				self.reflect_images(import_folder('./graphics/particles/leaf6'))
-				)
+				),
+   
+			# footsteps
+			'footstep_up': (import_folder('./graphics/particles/footsteps/up'),),
+			'footstep_down': (import_folder('./graphics/particles/footsteps/down'),),
+			'footstep_right': (import_folder('./graphics/particles/footsteps/right'),),
+			'footstep_left': (import_folder('./graphics/particles/footsteps/left'),)
 			}
     
     def reflect_images(self, frames):
@@ -53,7 +64,7 @@ class AnimationPlayer:
         ParticleEffect(pos, animation_frames, groups, 'leaf')
     
     def create_particles(self, animation_type, pos, groups, sprite_type):
-        animation_frames = self.frames[animation_type]
+        animation_frames = choice(self.frames[animation_type])
         ParticleEffect(pos, animation_frames, groups, sprite_type)
     
 class ParticleEffect(pygame.sprite.Sprite):

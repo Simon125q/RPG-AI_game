@@ -9,18 +9,22 @@ MOUSE_RIGHT = 2
 
 class Player(Entity):
     
-    def __init__(self, pos, groups, obstacle_sprites, create_attack, destroy_attack, create_magic):
+    def __init__(self, pos, groups, obstacle_sprites, create_attack, destroy_attack, create_magic, footstep_particles):
         super().__init__(groups)
         self.image = pygame.image.load('./graphics/test/player.png').convert_alpha()
         self.rect = self.image.get_rect(topleft = pos)
         # set graphics
         self.import_player_assets()
         self.status = "down"
+        self.footstep_particles = footstep_particles
         # movement
         self.obstacle_sprites = obstacle_sprites
         self.attacking = False
         self.attack_cooldown = 400
         self.attack_time = None
+        self.footstep = True
+        self.step_time = None
+        self.step_duration = 120
         # player hitbox
         self.hitbox = self.rect.inflate(-5, -30)
         # weapon
@@ -66,17 +70,47 @@ class Player(Entity):
             if keys[pygame.K_UP] or keys[pygame.K_w]:
                 self.direction.y = -1
                 self.status = 'up'
+                if self.footstep:
+                    self.step_time = pygame.time.get_ticks()
+                    self.footstep = False
+                    self.footstep_particles(self.rect.center - pygame.math.Vector2(0, -30), "up")
+                
             elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
                 self.direction.y = 1
                 self.status = 'down'
+                if self.footstep:
+                    self.step_time = pygame.time.get_ticks()
+                    self.footstep = False
+                    self.footstep_particles(self.rect.center - pygame.math.Vector2(0, 30), "down")
+                    
             else: self.direction.y = 0
                 
             if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
                 self.direction.x = 1
-                self.status = 'right'
+                if self.direction.y == 1:
+                    self.status = 'down'
+                elif self.direction.y == -1:
+                    self.status = 'up'
+                else:
+                    self.status = 'right'
+                if self.footstep:
+                    self.step_time = pygame.time.get_ticks()
+                    self.footstep = False
+                    self.footstep_particles(self.rect.center - pygame.math.Vector2(30, 0), "right")
+                    
             elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
                 self.direction.x = -1
-                self.status = 'left'
+                if self.direction.y == 1:
+                    self.status = 'down'
+                elif self.direction.y == -1:
+                    self.status = 'up'
+                else:
+                    self.status = 'left'
+                if self.footstep:
+                    self.step_time = pygame.time.get_ticks()
+                    self.footstep = False
+                    self.footstep_particles(self.rect.center - pygame.math.Vector2(-30, 0), "left")
+                    
             else: self.direction.x = 0
             
             if keys[pygame.K_LSHIFT]:
@@ -166,9 +200,14 @@ class Player(Entity):
         if not self.can_switch_magic:
             if current_time - self.magic_switch_time >= self.switch_duration_cooldown:
                 self.can_switch_magic = True
+                
         if not self.vulnerable:
             if current_time - self.hurt_time >= self.invulnerability_duration:
                 self.vulnerable = True
+                
+        if not self.footstep:
+            if current_time - self.step_time >= self.step_duration:
+                self.footstep = True
                 
         
     def animate(self):
