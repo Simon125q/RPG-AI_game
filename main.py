@@ -13,6 +13,10 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.level = Level()
+        
+        # sound
+        pygame.mixer.music.load('./audio/Aldous Ichnite - Jambo!.mp3')
+        pygame.mixer.music.play(loops = -1)
 
     def run(self):
         while True:
