@@ -11,8 +11,8 @@ class PlayerMagic:
             'heal': pygame.mixer.Sound('./audio/heal.wav'),
             'flame': pygame.mixer.Sound('./audio/flame.wav')
         }
-        self.sounds['flame'].set_volume(0.02)
-        self.sounds['heal'].set_volume(0.02)
+        self.sounds['flame'].set_volume(0.8)
+        self.sounds['heal'].set_volume(0.8)
         
     def heal(self, player, strength, cost, groups):
         if player.energy >= cost:

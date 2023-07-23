@@ -15,7 +15,8 @@ class Game:
         self.level = Level()
         
         # sound
-        pygame.mixer.music.load('./audio/Aldous Ichnite - Jambo!.mp3')
+        pygame.mixer.music.load('./audio/HoliznaCC0 - Mathamatition.mp3')
+        pygame.mixer.music.set_volume(0.8)
         pygame.mixer.music.play(loops = -1)
 
     def run(self):

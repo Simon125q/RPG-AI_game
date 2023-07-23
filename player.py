@@ -55,7 +55,7 @@ class Player(Entity):
         self.invulnerability_duration = 500
         # import sound
         self.weapon_attack_sound = pygame.mixer.Sound('./audio/sword.wav')
-        self.weapon_attack_sound.set_volume(0.009)
+        self.weapon_attack_sound.set_volume(0.1)
         
     def import_player_assets(self):
         character_path = './graphics/player/'
