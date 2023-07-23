@@ -4,6 +4,7 @@ from random import randint
 
 
 class PlayerMagic:
+    
     def __init__(self, animation_player):
         self.animation_player = animation_player
         
@@ -35,4 +36,6 @@ class PlayerMagic:
                     x = player.rect.centerx + randint(-TILESIZE // 3, TILESIZE // 3)
                     y = player.rect.centery + offset_y + randint(-TILESIZE // 3, TILESIZE // 3)
                     self.animation_player.create_particles('flame', (x, y), groups, 'flame')
-            
+
+    def ligthning(self, player, cost, groups):
+        pass            

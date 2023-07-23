@@ -26,7 +26,7 @@ class Player(Entity):
         self.step_time = None
         self.step_duration = 120
         # player hitbox
-        self.hitbox = self.rect.inflate(-5, -30)
+        self.hitbox = self.rect.inflate(-5, HITBOX_OFFSET['player'])
         # weapon
         self.create_attack = create_attack
         self.destroy_attack = destroy_attack
@@ -42,10 +42,12 @@ class Player(Entity):
         self.can_switch_magic = True
         self.magic_switch_time = None
         # stats
-        self.stats = {'health': 100, 'energy':60, 'attack':10, 'magic':4, 'speed':5}
+        self.stats = {'health': 100, 'energy': 60, 'attack': 10, 'magic': 4, 'speed': 5}
+        self.max_stats = {'health': 300, 'energy': 140, 'attack': 20, 'magic': 10, 'speed': 7}
+        self.upgrade_cost = {'health': 100, 'energy': 100, 'attack': 100, 'magic': 100, 'speed': 100}
         self.health = self.stats['health']
         self.energy = self.stats['energy']
-        self.exp = 123
+        self.exp = 500
         self.speed = self.stats['speed']
         # damage timer
         self.vulnerable = True
@@ -114,7 +116,7 @@ class Player(Entity):
             else: self.direction.x = 0
             
             if keys[pygame.K_LSHIFT]:
-                self.speed = self.stats['speed']+4
+                self.speed = self.stats['speed'] + 4
             else:
                 self.speed = self.stats['speed']
             
@@ -208,8 +210,7 @@ class Player(Entity):
         if not self.footstep:
             if current_time - self.step_time >= self.step_duration:
                 self.footstep = True
-                
-        
+                      
     def animate(self):
         animation = self.animations[self.status]
         
@@ -239,6 +240,12 @@ class Player(Entity):
         spell_damage = magic_data[self.magic]['strength']
         return base_damage + spell_damage
         
+    def get_value_by_index(self, index):
+        return list(self.stats.values())[index]
+        
+    def get_cost_by_index(self, index):
+        return list(self.upgrade_cost.values())[index]
+    
     def energy_recovery(self):
         if self.energy < self.stats['energy']:
             self.energy += 0.01 * self.stats['magic'] * 0.8

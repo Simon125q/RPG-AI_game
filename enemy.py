@@ -7,7 +7,7 @@ from random import randint
 
 class Enemy(Entity):
     
-    def __init__(self, monster_name, pos, groups, obstacle_sprites, damage_player, trigger_death_particles):
+    def __init__(self, monster_name, pos, groups, obstacle_sprites, damage_player, trigger_death_particles, add_exp):
         super().__init__(groups)
         self.sprite_type = 'enemy'
         
@@ -19,9 +19,9 @@ class Enemy(Entity):
         
         # movement
         self.rect = self.image.get_rect(topleft = pos)
-        self.hitbox = self.rect.inflate(-4, -12)
+        self.hitbox = self.rect.inflate(-6, HITBOX_OFFSET['enemy'])
         self.obstacle_sprites = obstacle_sprites
-        self.change_direction = True
+        # self.change_direction = True
         self.walk_time = None
         self.walk_cooldown = 600
         self.walk_x = 0
@@ -45,6 +45,7 @@ class Enemy(Entity):
         self.attack_cooldown = 400
         self.damage_player = damage_player
         self.trigger_death_particles = trigger_death_particles
+        self.add_exp = add_exp
         
         # inbincibility timer
         self.vulnerable = True
@@ -94,6 +95,7 @@ class Enemy(Entity):
         else:
             self.speed = self.monster_info['speed'] // 2
             if self.change_direction:
+                self.walk_cooldown = randint(400, 1200)
                 self.walk_x = randint(-1, 1)
                 self.walk_y = randint(-1, 1)
                 if (self.walk_x == 0 and self.walk_y == 0) or self.monster_name == 'spirit':
@@ -150,6 +152,7 @@ class Enemy(Entity):
         if self.health <= 0:
             self.kill()
             self.trigger_death_particles(self.rect.center, self.monster_name) 
+            self.add_exp(self.exp)
                        
     def hit_reaction(self):
         if not self.vulnerable:

@@ -3,6 +3,7 @@ from support import import_folder
 from random import choice
 
 class AnimationPlayer:
+    
     def __init__(self):
         self.frames = {
 			# magic
@@ -68,6 +69,7 @@ class AnimationPlayer:
         ParticleEffect(pos, animation_frames, groups, sprite_type)
     
 class ParticleEffect(pygame.sprite.Sprite):
+    
     def __init__(self, pos, animation_frames, groups, sprite_type):
         super().__init__(groups)
         self.sprite_type = sprite_type

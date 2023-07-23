@@ -7,6 +7,13 @@ WIDTH, HEIGHT = screens[0]
 GAME_NAME = "AI game"
 FPS = 60
 TILESIZE = 64
+HITBOX_OFFSET = {
+	'player': -30,
+	'object': -40,
+	'grass': -12,
+	'invisible': -32,
+	'enemy': -16
+}
 
 # UI
 BAR_HEIGHT = 20
@@ -26,6 +33,12 @@ TEXT_COLOR = '#EEEEEE'
 HEALTH_COLOR = 'red'
 ENERGY_COLOR = 'blue'
 UI_BORDER_COLOR_ACTIVE = 'gold'
+
+# upgrade menu
+TEXT_COLOR_SELECTED = '#111111'
+BAR_COLOR = '#EEEEEE'
+BAR_COLOR_SELECTED = '#111111'
+UPGRADE_BG_COLOR_SELECTED = '#EEEEEE'
 
 # weapons 
 weapon_data = {

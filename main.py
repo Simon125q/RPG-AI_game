@@ -4,6 +4,7 @@ from debug import debug
 from level import Level
 
 class Game:
+    
     def __init__(self):
 
         pygame.init()
@@ -23,7 +24,10 @@ class Game:
                     if event.key == pygame.K_ESCAPE:
                         pygame.quit()
                         sys.exit()
-            self.screen.fill('black')
+                    elif event.key == pygame.K_TAB:
+                        self.level.toggle_menu()
+                        
+            self.screen.fill(WATER_COLOR)
             self.level.run()
             pygame.display.update()
             self.clock.tick(FPS)
