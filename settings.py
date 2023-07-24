@@ -6,7 +6,7 @@ screens = pygame.display.get_desktop_sizes()
 WIDTH, HEIGHT = screens[0]
 GAME_NAME = "AI game"
 FPS = 60
-TILESIZE = 32
+TILESIZE = 64
 HITBOX_OFFSET = {
 	'player': -30,
 	'object': -40,

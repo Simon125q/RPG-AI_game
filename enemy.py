@@ -21,7 +21,9 @@ class Enemy(Entity):
         self.rect = self.image.get_rect(topleft = pos)
         self.hitbox = self.rect.inflate(-6, HITBOX_OFFSET['enemy'])
         self.obstacle_sprites = obstacle_sprites
-        # self.change_direction = True
+        self.collision_time = 0
+        self.chase_time = randint(250, 400)
+        self.change_direction = True
         self.walk_time = None
         self.walk_cooldown = 600
         self.walk_x = 0
@@ -99,8 +101,11 @@ class Enemy(Entity):
             self.attack_time = pygame.time.get_ticks()
             self.damage_player(self.attack_damage, self.attack_type)
         elif self.status == 'move' and self.player_noticed:
-            self.speed = self.monster_info['speed']
-            self.direction = self.get_player_direction_and_distance(player)[1]  
+            self.speed = self.monster_info['speed']  
+            self.direction = self.get_player_direction_and_distance(player)[1]
+            if self.collided:
+                self.collision_time = pygame.time.get_ticks()
+                
         else:
             self.speed = self.monster_info['speed'] // 2
             if self.change_direction:
@@ -145,6 +150,10 @@ class Enemy(Entity):
         if not self.change_direction:
             if current_time - self.walk_time >= self.walk_cooldown:
                 self.change_direction = True
+        if self.collided:
+            if current_time - self.collision_time >= self.chase_time:
+                self.collided = False
+                self.collision_time = 0
     
     def get_damage(self, player, attack_type):
         if self.vulnerable:
