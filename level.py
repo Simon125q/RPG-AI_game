@@ -39,6 +39,8 @@ class Level:
         # particles
         self.animation_player = AnimationPlayer()
         self.magic_player = PlayerMagic(self.animation_player)
+        # player 
+        self.player_death = False
         
     def create_map(self):
         layouts = {
@@ -121,7 +123,11 @@ class Level:
                             target_sprite.kill()
                         else:
                             target_sprite.get_damage(self.player, attack_sprite.sprite_type)
-         
+    
+    def check_if_alive(self):
+        if self.player.health <= 0:
+            self.player_death = True
+      
     def damage_player(self, amount, attack_type):
         if self.player.vulnerable:
             self.player.health -= amount
@@ -157,6 +163,7 @@ class Level:
         else:
             self.visible_sprites.update()
             self.visible_sprites.enemy_update(self.player)
+            self.check_if_alive()
             self.player_attack_logic()
         
         

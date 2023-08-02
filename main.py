@@ -40,9 +40,13 @@ class Game:
         if self.main_menu.play:
             self.pause_menu = False
             self.main_menu.play = False
-        if self.main_menu.exit:
+        elif self.main_menu.exit:
             pygame.quit()
-            sys.exit()   
+            sys.exit()
+            
+        if self.level.player_death:
+            self.restart()
+            self.pause_menu = True   
             
     def run(self):
         while True:
