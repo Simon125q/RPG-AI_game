@@ -40,6 +40,22 @@ BAR_COLOR = '#EEEEEE'
 BAR_COLOR_SELECTED = '#111111'
 UPGRADE_BG_COLOR_SELECTED = '#EEEEEE'
 
+# Menu
+BUTTON_SPACING = 15
+BUTTON_HEIGHT = 70
+BUTTON_WIDTH = 250
+MENU_FONT = './graphics/font/joystix.ttf'
+MENU_FONT_SIZE = 30
+MENU_FONT_COLOR = '#F2E8CF'
+BUTTON_COLOR_SELECTED = '#A7C957'
+BUTTON_COLOR = '#6A994E'
+BUTTON_COLOR_BORDER = '#386641'
+MATCHING_RED = '#BC4749'
+PLAY = 0
+SETTINGS = 1
+ABOUT = 2
+EXIT = 3
+
 # weapons 
 weapon_data = {
 	'sword': {'cooldown': 100, 'damage': 15,'graphic':'./graphics/weapons/sword/full.png'},
