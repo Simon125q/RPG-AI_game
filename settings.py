@@ -56,6 +56,15 @@ SETTINGS = 1
 ABOUT = 2
 EXIT = 3
 
+# Dialogs
+DIALOG_BOX_COLOR = '#F2E8CF'
+DIALOG_FONT = './graphics/font/joystix.ttf'
+DIALOG_FONT_SIZE = 18
+DIALOG_FONT_COLOR = '#111111'
+DIALOG_BOX_BORDER_COLOR = '#386641'
+DIALOG_MARGIN = 10
+LINE_HEIGHT = 30
+
 # weapons 
 weapon_data = {
 	'sword': {'cooldown': 100, 'damage': 15,'graphic':'./graphics/weapons/sword/full.png'},

@@ -1,49 +1,118 @@
 import pygame
-import sys
-
-DIALOG_BOX_COLOR = ''
-DIALOG_FONT = ''
-DIALOG_FONT_SIZE = 18
-DIALOG_FONT_COLOR = ''
-DIALOG_BOX_BORDER_COLOR = ''
-DIALOG_MARGIN = 10
+from settings import *
+from texts import *
 
 class Dialog_box:
     def __init__(self):
+        
+        self.display_surface = pygame.display.get_surface()
+        
         self.width = WIDTH * 0.9
         self.height = HEIGHT * 0.3
-        self.border = 4
-        self.chars_line_length = self.width - DIALOG_MARGIN * 2 // DIALOG_FONT_SIZE
+        self.border = 10
         self.top_pos = ((WIDTH - self.width) // 2, HEIGHT - self.height - 10)
-        self.bottom_pos(self.top_pos[0] - self.border//2, self.top_pos[1] - self.border//2)
+        self.bottom_pos = (self.top_pos[0] - self.border//2, self.top_pos[1] - self.border//2)
         self.bottom_rect = pygame.Rect(self.bottom_pos, (self.width + self.border, self.height + self.border))
         self.top_rect = pygame.Rect(self.top_pos, (self.width, self.height))
         
         self.font = pygame.font.Font(DIALOG_FONT, DIALOG_FONT_SIZE)
-        self.text_rect = self.text_surf.get_rect(center = self.top_rect.center)
+        self.text_surf = self.font.render('', True, DIALOG_FONT_COLOR)
         
-    def display(self, screen, message):
-        words = message.split(' ')
-        for msg in range(0, len(message), self.chars_line_length):
-            
-            self.text_surf = self.font.render(text, True, DIALOG_FONT_COLOR)
-            self.draw(screen)
-            self.get_action()
-            
-            
-    def draw(self, screen):
-        pygame.draw.rect(screen, DIALOG_BOX_COLOR, self.bottom_rect, border_radius=10)
-        pygame.draw.rect(screen, DIALOG_BOX_COLOR, self.top_rect, border_radius=10)
+        self.chars_line_length = (self.width) // DIALOG_FONT_SIZE
+        self.counter = 0
+        self.line_counter = 0
+        self.active_message = 0
+        self.messages = []
+        self.to_show = []
+        self.done = False
+        self.line = 0
         
-        screen.blit(self.text_surf, self.text_rect)
+    def cut_messages(self, message):
+        lines = []
+        paragraph = []
+        line = ''
+        for word in message.split(' '):
+            if len(line + word) + 1 <= self.chars_line_length:
+                line = line + ' ' + word
+            else:
+                lines.append(line)
+                line = word
+        lines.append(line)
+        
+        paragraph_height = 0
+        for line in lines:
+            if paragraph_height + 2 <= (self.height - DIALOG_MARGIN * 2) / LINE_HEIGHT - 2:
+                paragraph.append(line)
+                paragraph_height += 1
+            else:
+                self.messages.append(paragraph)
+                paragraph = [line]
+                paragraph_height = 0
+                    
+        self.messages.append(paragraph)
+            
+    def display(self, event = 'ERROR'):
+        
+        if self.messages == []:
+            self.cut_messages(DIALOGS[event])
+        
+        self.input()
+        text_speed = 1
+        
+        self.paragraph = self.messages[self.active_message]
+        
+        if self.counter < text_speed * len(self.paragraph):
+            self.counter += 1
+        elif self.counter >= text_speed * len(self.paragraph):
+            self.done = True
+        
+        line_done = False
+        
+        text_line = self.paragraph[self.line] if self.line < len(self.paragraph) else []
+        if text_line != []:
+            if self.line_counter < text_speed * len(text_line):
+                self.line_counter += 1
+            elif self.line_counter >= text_speed * len(text_line):
+                line_done = True
+                
+            
+            if line_done:
+                self.text_surf = self.font.render(text_line[0: self.line_counter // text_speed], True, DIALOG_FONT_COLOR)
+                self.text_rect = self.text_surf.get_rect(center = (self.top_rect.centerx, self.top_rect.y + (self.line+1) * LINE_HEIGHT + DIALOG_MARGIN))
+                self.to_show.append((self.text_surf, self.text_rect))
+                self.text_surf = self.font.render('', True, DIALOG_FONT_COLOR)
+                self.line_counter = 0
+                self.line += 1
+                
+            else:
+                self.text_surf = self.font.render(text_line[0: self.line_counter // text_speed], True, DIALOG_FONT_COLOR)
+                self.text_rect = self.text_surf.get_rect(center = (self.top_rect.centerx, self.top_rect.y + (self.line + 1) * LINE_HEIGHT + DIALOG_MARGIN))
+        self.draw()
+        
+    def draw(self):
+        
+        pygame.draw.rect(self.display_surface, DIALOG_BOX_BORDER_COLOR, self.bottom_rect, border_radius=10)
+        pygame.draw.rect(self.display_surface, DIALOG_BOX_COLOR, self.top_rect, border_radius=10)
+        
+        for surf, rect in self.to_show:
+            self.display_surface.blit(surf, rect)
+            
+        self.display_surface.blit(self.text_surf, self.text_rect)
     
-    def get_action(self):
-        loop = True
-        while loop:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
-                        loop == False
+    def input(self):
+        keys = pygame.key.get_pressed()
+        
+        if keys[pygame.K_SPACE] and self.done and self.active_message < len(self.messages) - 1:
+            self.to_show = []
+            self.active_message += 1
+            self.done = False
+            self.counter = 0
+            self.line = 0
+        elif keys[pygame.K_SPACE] and self.done and self.active_message >= len(self.messages) - 1:
+            self.to_show = []
+            self.active_message = 0
+            self.done = False
+            self.counter = 0
+            self.line = 0
+            
+        

@@ -11,6 +11,7 @@ from enemy import Enemy
 from particles import AnimationPlayer
 from magic import PlayerMagic
 from upgrade import Upgrade
+from dialogs import Dialog_box
 
 PLAYER = '394'
 BAMBOO = '390'
@@ -36,6 +37,7 @@ class Level:
         # user interface
         self.ui = UI()
         self.upgrade = Upgrade(self.player)
+        self.dialog_box = Dialog_box()
         # particles
         self.animation_player = AnimationPlayer()
         self.magic_player = PlayerMagic(self.animation_player)
@@ -159,7 +161,8 @@ class Level:
         self.ui.display(self.player)
         
         if self.game_paused:
-            self.upgrade.display()
+            #self.upgrade.display()
+            self.dialog_box.display()
         else:
             self.visible_sprites.update()
             self.visible_sprites.enemy_update(self.player)
