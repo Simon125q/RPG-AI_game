@@ -75,7 +75,6 @@ class Dialog_box:
             elif self.line_counter >= text_speed * len(text_line):
                 line_done = True
                 
-            
             if line_done:
                 self.text_surf = self.font.render(text_line[0: self.line_counter // text_speed], True, DIALOG_FONT_COLOR)
                 self.text_rect = self.text_surf.get_rect(center = (self.top_rect.centerx, self.top_rect.y + (self.line+1) * LINE_HEIGHT + DIALOG_MARGIN))
