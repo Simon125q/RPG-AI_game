@@ -43,6 +43,7 @@ class Level:
         self.magic_player = PlayerMagic(self.animation_player)
         # player 
         self.player_death = False
+        self.dialog_pause = False
         
     def create_map(self):
         layouts = {
@@ -161,7 +162,8 @@ class Level:
         self.ui.display(self.player)
         
         if self.game_paused:
-            #self.upgrade.display()
+            self.upgrade.display()
+        elif self.dialog_pause:
             self.dialog_box.display()
         else:
             self.visible_sprites.update()
@@ -180,7 +182,7 @@ class YsortCameraGroup(pygame.sprite.Group):
         self.offset = pygame.math.Vector2()
         
         # create the floor
-        self.floor_surf = pygame.image.load('./graphics/tilemap/ground.png').convert()
+        self.floor_surf = pygame.image.load('./graphics/tilemap/final_map.png').convert()
         self.floor_rect = self.floor_surf.get_rect(topleft = (0, 0))
         
     def custom_draw(self, player):
