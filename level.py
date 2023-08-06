@@ -13,10 +13,16 @@ from magic import PlayerMagic
 from upgrade import Upgrade
 from dialogs import Dialog_box
 
-PLAYER = '394'
-BAMBOO = '390'
-SPIRIT = '391'
-RACCOON = '392'
+PLAYER = '13'
+BAMBOO = '14'
+SPIRIT = '16'
+RACCOON = '15'
+SQUID = '17'
+# PLAYER = '394'
+# BAMBOO = '390'
+# SPIRIT = '391'
+# RACCOON = '392'
+# SQUID = '393'
 
 class Level:
     
@@ -89,7 +95,7 @@ class Level:
                                 if col == BAMBOO: monster_name = 'bamboo'
                                 elif col == SPIRIT: monster_name = 'spirit'
                                 elif col == RACCOON: monster_name = 'raccoon'
-                                else: monster_name = 'squid'
+                                else : monster_name = 'squid'
                                 Enemy(monster_name,
                                       (x,y),
                                       [self.visible_sprites, self.attackable_sprites],

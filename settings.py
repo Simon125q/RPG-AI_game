@@ -9,9 +9,9 @@ FPS = 60
 TILESIZE = 64
 HITBOX_OFFSET = {
 	'player': -30,
-	'object': -40,
-	'grass': -12,
-	'invisible': -32,
+	'object': -42,
+	'grass': -14,
+	'invisible': -38,
 	'enemy': -16
 }
 
