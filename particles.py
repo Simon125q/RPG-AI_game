@@ -27,7 +27,20 @@ class AnimationPlayer:
 			'squid': (import_folder('./graphics/particles/smoke_orange'),),
 			'raccoon': (import_folder('./graphics/particles/raccoon'),),
 			'spirit': (import_folder('./graphics/particles/nova'),),
+   			'big_frog': (import_folder('./graphics/particles/nova'),),
+      		'giant_flam': (import_folder('./graphics/particles/nova'),),
+        	'giant_spirit': (import_folder('./graphics/particles/nova'),),
 			'bamboo': (import_folder('./graphics/particles/bamboo'),),
+			'eye': (import_folder('./graphics/particles/smoke_orange'),),
+			'flam': (import_folder('./graphics/particles/nova'),),
+			'mushroom': (import_folder('./graphics/particles/bamboo'),),
+			'octopus': (import_folder('./graphics/particles/smoke_orange'),),
+			'skeleton': (import_folder('./graphics/particles/smoke_orange'),),
+   			'undead_skeleton': (import_folder('./graphics/particles/smoke_orange'),),
+			'skull': (import_folder('./graphics/particles/nova'),),
+			'slime': (import_folder('./graphics/particles/smoke_orange'),),
+			'cyclop': (import_folder('./graphics/particles/smoke_orange'),),
+   			'giant_raccoon': (import_folder('./graphics/particles/raccoon'),),
 			
 			# leafs 
 			'leaf': (

@@ -7,7 +7,7 @@ from random import randint
 
 class Enemy(Entity):
     
-    def __init__(self, monster_name, pos, groups, obstacle_sprites, damage_player, trigger_death_particles, add_exp, player):
+    def __init__(self, monster_name, pos, groups, obstacle_sprites, damage_player, trigger_death_particles, add_exp, player, level):
         super().__init__(groups)
         self.sprite_type = 'enemy'
         self.player = player
@@ -61,6 +61,9 @@ class Enemy(Entity):
         self.attack_sound.set_volume(0.2)
         self.death_sound.set_volume(0.2)
         self.hit_sound.set_volume(0.2)
+        
+        # after life
+        self.level = level
            
     def import_graphics(self, name):
         self.animations = {'idle':[], 'move':[], 'attack':[]}
@@ -170,7 +173,18 @@ class Enemy(Entity):
     def check_death(self):
         if self.health <= 0:
             self.death_sound.play()
+            if self.monster_name != 'undead_skeleton':
+                Enemy('undead_skeleton',
+                        (self.rect.x, self.rect.y),
+                        [self.level.visible_sprites, self.level.attackable_sprites],
+                        self.level.obstacle_sprites,
+                        self.level.damage_player,
+                        self.level.trigger_death_particles,
+                        self.level.add_xp,
+                        self.player,
+                        self.level)
             self.kill()
+            
             self.trigger_death_particles(self.rect.center, self.monster_name) 
             self.add_exp(self.exp)
                        

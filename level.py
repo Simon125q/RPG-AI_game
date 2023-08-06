@@ -13,17 +13,6 @@ from magic import PlayerMagic
 from upgrade import Upgrade
 from dialogs import Dialog_box
 
-PLAYER_POS = (1919,4678)
-PLAYER = '13'
-BAMBOO = '14'
-SPIRIT = '16'
-RACCOON = '15'
-SQUID = '17'
-# PLAYER = '394'
-# BAMBOO = '390'
-# SPIRIT = '391'
-# RACCOON = '392'
-# SQUID = '393'
 
 class Level:
     
@@ -39,8 +28,9 @@ class Level:
         self.current_attack = None
         self.attack_sprites = pygame.sprite.Group()
         self.attackable_sprites = pygame.sprite.Group()
+        # dialogs
+        self.dialog_spots = []
         # sprites setup
-        
         self.create_map()
         # user interface
         self.ui = UI()
@@ -52,6 +42,7 @@ class Level:
         # player 
         self.player_death = False
         self.dialog_pause = False
+        
     
     def create_map(self):
         self.player = Player(PLAYER_POS,
@@ -93,11 +84,33 @@ class Level:
                                  surf)
                         if style == 'entities':
                             if col == PLAYER:               
-                                pass
+                                self.dialog_spots.append((x, y, 'start'))
                             else:
                                 if col == BAMBOO: monster_name = 'bamboo'
                                 elif col == SPIRIT: monster_name = 'spirit'
-                                elif col == RACCOON: monster_name = 'raccoon'
+                                elif col == RACCOON: 
+                                    monster_name = 'raccoon'
+                                    self.dialog_spots.append((x, y, 'boss'))
+                                elif col == BIG_FROG: 
+                                    monster_name = 'big_frog'
+                                    self.dialog_spots.append((x, y, 'boss'))
+                                elif col == GIANT_FLAM: 
+                                    monster_name = 'giant_flam'
+                                    self.dialog_spots.append((x, y, 'boss'))
+                                elif col == GIANT_SPIRIT: 
+                                    monster_name = 'giant_spirit'
+                                    self.dialog_spots.append((x, y, 'boss'))
+                                elif col == EYE: monster_name = 'eye'
+                                elif col == FLAM: monster_name = 'flam'
+                                elif col == MUSHROOM: monster_name = 'mushroom'
+                                elif col == OCTOPUS: monster_name = 'octopus'
+                                elif col == SKELETON: monster_name = 'skeleton'
+                                elif col == SKULL: monster_name = 'skull'
+                                elif col == SLIME: monster_name = 'slime'
+                                elif col == CYCLOP: monster_name = 'cyclop'
+                                elif col == GIANT_RACCOON: 
+                                    monster_name = 'giant_raccoon'
+                                    self.dialog_spots.append((x, y, 'boss'))
                                 else : monster_name = 'squid'
                                 Enemy(monster_name,
                                       (x,y),
@@ -106,7 +119,8 @@ class Level:
                                       self.damage_player,
                                       self.trigger_death_particles,
                                       self.add_xp,
-                                      self.player)
+                                      self.player,
+                                      self)
                                 
     def destroy_attack(self):
         if self.current_attack:

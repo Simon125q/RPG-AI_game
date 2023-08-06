@@ -15,6 +15,26 @@ HITBOX_OFFSET = {
 	'enemy': -16
 }
 
+# Map spowns
+PLAYER_POS = (1919,4678)
+PLAYER = '13'
+BAMBOO = '14'
+SPIRIT = '16'
+RACCOON = '15'
+GIANT_RACCOON = '11'
+SQUID = '17'
+BIG_FROG = '10'
+GIANT_FLAM = '9'
+GIANT_SPIRIT = '12'
+CYCLOP = '7'
+EYE = '0'
+FLAM = '1'
+MUSHROOM = '2'
+OCTOPUS = '3'
+SKELETON = '4'
+SKULL = '5'
+SLIME = '6'
+
 # UI
 BAR_HEIGHT = 20
 HEALTH_BAR_WIDTH = 200
@@ -73,7 +93,7 @@ weapon_data = {
 	'rapier':{'cooldown': 50, 'damage': 8, 'graphic':'./graphics/weapons/rapier/full.png'},
 	'sai':{'cooldown': 80, 'damage': 10, 'graphic':'./graphics/weapons/sai/full.png'},
  	'hammer':{'cooldown': 1000, 'damage': 45, 'graphic':'./graphics/weapons/hammer/full.png'},
-  	'bat':{'cooldown': 600, 'damage': 15, 'graphic':'./graphics/weapons/bat/full.png'},
+  	'big_sword':{'cooldown': 400, 'damage': 30, 'graphic':'./graphics/weapons/big_sword/full.png'},
    	'fork':{'cooldown': 350, 'damage': 25, 'graphic':'./graphics/weapons/fork/full.png'},}
 # magic
 magic_data = {
@@ -86,10 +106,17 @@ monster_data = {
 	'squid': {'health': 100,'exp':100,'damage':20,'attack_type': 'slash', 'attack_sound':'./audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 80, 'notice_radius': 360},
 	'raccoon': {'health': 350,'exp':250,'damage':50,'attack_type': 'claw',  'attack_sound':'./audio/attack/claw.wav','speed': 2, 'resistance': 2, 'attack_radius': 130, 'notice_radius': 500},
 	'spirit': {'health': 100,'exp':110,'damage':8,'attack_type': 'thunder', 'attack_sound':'./audio/attack/fireball.wav', 'speed': 4, 'resistance': 3, 'attack_radius': 60, 'notice_radius': 350},
-	'bamboo': {'health': 70,'exp':120,'damage':6,'attack_type': 'leaf_attack', 'attack_sound':'./audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300},
- 	'bamboo': {'health': 70,'exp':120,'damage':6,'attack_type': 'leaf_attack', 'attack_sound':'./audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300},
+	'big_frog': {'health': 200,'exp':170,'damage':13,'attack_type': 'slash', 'attack_sound':'./audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 80, 'notice_radius': 340},
+ 	'giant_flam': {'health': 280,'exp':200,'damage':40,'attack_type': 'thunder', 'attack_sound':'./audio/attack/fireball.wav', 'speed': 4, 'resistance': 2, 'attack_radius': 100, 'notice_radius': 360},
   	'bamboo': {'health': 70,'exp':120,'damage':6,'attack_type': 'leaf_attack', 'attack_sound':'./audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300},
-   	'bamboo': {'health': 70,'exp':120,'damage':6,'attack_type': 'leaf_attack', 'attack_sound':'./audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300},
-    'bamboo': {'health': 70,'exp':120,'damage':6,'attack_type': 'leaf_attack', 'attack_sound':'./audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300},
-    'bamboo': {'health': 70,'exp':120,'damage':6,'attack_type': 'leaf_attack', 'attack_sound':'./audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300},
-    'bamboo': {'health': 70,'exp':120,'damage':6,'attack_type': 'leaf_attack', 'attack_sound':'./audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300},}
+   	'giant_spirit': {'health': 280,'exp':200,'damage':35,'attack_type': 'thunder', 'attack_sound':'./audio/attack/fireball.wav', 'speed': 4, 'resistance': 2, 'attack_radius': 100, 'notice_radius': 360},
+   	'eye': {'health': 70,'exp':120,'damage':6,'attack_type': 'slash', 'attack_sound':'./audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300},
+    'flam': {'health': 70,'exp':120,'damage':6,'attack_type': 'thunder', 'attack_sound':'./audio/attack/fireball.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300},
+    'mushroom': {'health': 70,'exp':120,'damage':6,'attack_type': 'leaf_attack', 'attack_sound':'./audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300},
+    'octopus': {'health': 70,'exp':120,'damage':6,'attack_type': 'slash', 'attack_sound':'./audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300},
+    'skeleton': {'health': 70,'exp':120,'damage':6,'attack_type': 'slash', 'attack_sound':'./audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300},
+    'undead_skeleton': {'health': 60,'exp':30,'damage':6,'attack_type': 'slash', 'attack_sound':'./audio/attack/slash.wav', 'speed': 3, 'resistance': 2, 'attack_radius': 50, 'notice_radius': 250},
+    'skull': {'health': 70,'exp':120,'damage':6,'attack_type': 'thunder', 'attack_sound':'./audio/attack/fireball.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300},
+    'slime': {'health': 70,'exp':120,'damage':6,'attack_type': 'slash', 'attack_sound':'./audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300},
+    'cyclop': {'health': 70,'exp':120,'damage':6,'attack_type': 'thunder', 'attack_sound':'./audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300},
+	'giant_raccoon': {'health': 70,'exp':120,'damage':6,'attack_type': 'claw', 'attack_sound':'./audio/attack/claw.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 50, 'notice_radius': 300},}
