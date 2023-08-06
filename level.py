@@ -13,6 +13,7 @@ from magic import PlayerMagic
 from upgrade import Upgrade
 from dialogs import Dialog_box
 
+PLAYER_POS = (1919,4678)
 PLAYER = '13'
 BAMBOO = '14'
 SPIRIT = '16'
@@ -27,7 +28,7 @@ SQUID = '17'
 class Level:
     
     def __init__(self):
-        
+       
         # get the display surface
         self.display_surface = pygame.display.get_surface()
         self.game_paused = False
@@ -39,6 +40,7 @@ class Level:
         self.attack_sprites = pygame.sprite.Group()
         self.attackable_sprites = pygame.sprite.Group()
         # sprites setup
+        
         self.create_map()
         # user interface
         self.ui = UI()
@@ -50,8 +52,15 @@ class Level:
         # player 
         self.player_death = False
         self.dialog_pause = False
-        
+    
     def create_map(self):
+        self.player = Player(PLAYER_POS,
+                            [self.visible_sprites], 
+                            self.obstacle_sprites, 
+                            self.create_attack, 
+                            self.destroy_attack,
+                            self.create_magic,
+                            self.footstep_particles)
         layouts = {
             'boundary': import_csv_layout('./map/map_FloorBlocks.csv'),
             'grass': import_csv_layout('./map/map_Grass.csv'),
@@ -84,13 +93,7 @@ class Level:
                                  surf)
                         if style == 'entities':
                             if col == PLAYER:               
-                                self.player = Player((x,y),
-                                                    [self.visible_sprites], 
-                                                    self.obstacle_sprites, 
-                                                    self.create_attack, 
-                                                    self.destroy_attack,
-                                                    self.create_magic,
-                                                    self.footstep_particles)
+                                pass
                             else:
                                 if col == BAMBOO: monster_name = 'bamboo'
                                 elif col == SPIRIT: monster_name = 'spirit'
@@ -102,7 +105,8 @@ class Level:
                                       self.obstacle_sprites,
                                       self.damage_player,
                                       self.trigger_death_particles,
-                                      self.add_xp)
+                                      self.add_xp,
+                                      self.player)
                                 
     def destroy_attack(self):
         if self.current_attack:
@@ -201,10 +205,13 @@ class YsortCameraGroup(pygame.sprite.Group):
         self.display_surface.blit(self.floor_surf, floor_offset_pos)
         
         for sprite in sorted(self.sprites(), key = lambda sprite: sprite.rect.centery):
-            offset_pos = sprite.rect.topleft + self.offset
-            self.display_surface.blit(sprite.image, offset_pos)
+            if abs(sprite.rect.x - player.rect.x) < WIDTH//2 + 40 and abs(sprite.rect.y - player.rect.y) < HEIGHT//2 + 80:
+                offset_pos = sprite.rect.topleft + self.offset
+                self.display_surface.blit(sprite.image, offset_pos)
             
     def enemy_update(self,player):
         enemy_sprites = [sprite for sprite in self.sprites() if hasattr(sprite,'sprite_type') and sprite.sprite_type == 'enemy']
+        
         for enemy in enemy_sprites:
-            enemy.enemy_update(player)
+            if abs(enemy.rect.x - player.rect.x) < WIDTH//2 + 40 and abs(enemy.rect.y - player.rect.y) < HEIGHT//2 + 40:
+                enemy.enemy_update(player)

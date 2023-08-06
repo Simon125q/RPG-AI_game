@@ -7,10 +7,10 @@ from random import randint
 
 class Enemy(Entity):
     
-    def __init__(self, monster_name, pos, groups, obstacle_sprites, damage_player, trigger_death_particles, add_exp):
+    def __init__(self, monster_name, pos, groups, obstacle_sprites, damage_player, trigger_death_particles, add_exp, player):
         super().__init__(groups)
         self.sprite_type = 'enemy'
-        
+        self.player = player
         # graphics setup
         self.import_graphics(monster_name)
         self.status = 'idle'
@@ -179,10 +179,11 @@ class Enemy(Entity):
             self.direction *= -self.resistance
         
     def update(self):
-        self.hit_reaction()
-        self.move(self.speed)
-        self.animate()
-        self.cooldowns()
+        if abs(self.rect.x - self.player.rect.x) < WIDTH//2 + 40 and abs(self.rect.y - self.player.rect.y) < HEIGHT//2 + 80:
+            self.hit_reaction()
+            self.move(self.speed)
+            self.animate()
+            self.cooldowns()
     
     def enemy_update(self,player):
         self.get_status(player)
