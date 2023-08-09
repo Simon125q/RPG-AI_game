@@ -3,9 +3,11 @@ from settings import *
 from texts import *
 
 class Dialog_box:
-    def __init__(self):
+    def __init__(self, level):
         
         self.display_surface = pygame.display.get_surface()
+        
+        self.level = level
         
         self.width = WIDTH * 0.9
         self.height = HEIGHT * 0.3
@@ -51,7 +53,7 @@ class Dialog_box:
                     
         self.messages.append(paragraph)
             
-    def display(self, event = 'ERROR'):
+    def display(self, event = 'ERROR',):
         
         if self.messages == []:
             self.cut_messages(DIALOGS[event])
@@ -113,5 +115,6 @@ class Dialog_box:
             self.done = False
             self.counter = 0
             self.line = 0
+            self.level.dialog_pause = False
             
         

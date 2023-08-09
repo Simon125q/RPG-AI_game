@@ -1,6 +1,6 @@
 import pygame
 from settings import *
-import math
+from random import randint
 from support import import_folder
 from entity import Entity
 
@@ -236,7 +236,8 @@ class Player(Entity):
             
     def get_full_weapon_damage(self):
         base_damage = self.stats["attack"]
-        weapon_damage = weapon_data[self.weapon]['damage']
+        weapon_damage = randint(weapon_data[self.weapon]['min_damage'], weapon_data[self.weapon]['max_damage'])
+        #weapon_damage = weapon_data[self.weapon]['damage']
         return base_damage + weapon_damage
     
     def get_full_magic_damage(self):

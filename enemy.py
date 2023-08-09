@@ -7,7 +7,7 @@ from random import randint
 
 class Enemy(Entity):
     
-    def __init__(self, monster_name, pos, groups, obstacle_sprites, damage_player, trigger_death_particles, add_exp, player, level):
+    def __init__(self, monster_name, pos, groups, obstacle_sprites, damage_player, trigger_death_particles, trigger_damage_particles, add_exp, player, level):
         super().__init__(groups)
         self.sprite_type = 'enemy'
         self.player = player
@@ -47,6 +47,7 @@ class Enemy(Entity):
         self.attack_cooldown = 400
         self.damage_player = damage_player
         self.trigger_death_particles = trigger_death_particles
+        self.trigger_damage_particles = trigger_damage_particles
         self.add_exp = add_exp
         
         # inbincibility timer
@@ -163,12 +164,18 @@ class Enemy(Entity):
             self.hit_sound.play()
             self.direction = self.get_player_direction_and_distance(player)[1]
             if attack_type == 'weapon':
-                self.health -= player.get_full_weapon_damage()
+                damage = player.get_full_weapon_damage()
             else:
-                self.health -= player.get_full_magic_damage()
+                damage = player.get_full_magic_damage()
+            self.health -= damage
             self.hit_time = pygame.time.get_ticks()
+            self.invincibility_duration = 200 + weapon_data[self.player.weapon]['cooldown']
             self.vulnerable = False
+            self.trigger_damage_particles(self.rect.center, str(damage))
             self.check_death()
+    
+    def display_damage(self, damage):
+        debug(str(damage), self.rect.x + 20, self.rect.y + 20)
     
     def check_death(self):
         if self.health <= 0:
@@ -180,6 +187,7 @@ class Enemy(Entity):
                         self.level.obstacle_sprites,
                         self.level.damage_player,
                         self.level.trigger_death_particles,
+                        self.level.trigger_damage_particles,
                         self.level.add_xp,
                         self.player,
                         self.level)

@@ -29,19 +29,20 @@ class Level:
         self.attack_sprites = pygame.sprite.Group()
         self.attackable_sprites = pygame.sprite.Group()
         # dialogs
+        self.dialog_box = Dialog_box(self)
+        self.dialog_pause = False
         self.dialog_spots = []
+        self.dialog_topic = 'TEST'
         # sprites setup
         self.create_map()
         # user interface
         self.ui = UI()
         self.upgrade = Upgrade(self.player)
-        self.dialog_box = Dialog_box()
         # particles
         self.animation_player = AnimationPlayer()
         self.magic_player = PlayerMagic(self.animation_player)
         # player 
         self.player_death = False
-        self.dialog_pause = False
         
     
     def create_map(self):
@@ -84,22 +85,24 @@ class Level:
                                  surf)
                         if style == 'entities':
                             if col == PLAYER:               
-                                self.dialog_spots.append((x, y, 'start'))
+                                self.dialog_spots.append((x, y, 'START'))
                             else:
                                 if col == BAMBOO: monster_name = 'bamboo'
                                 elif col == SPIRIT: monster_name = 'spirit'
                                 elif col == RACCOON: 
                                     monster_name = 'raccoon'
-                                    self.dialog_spots.append((x, y, 'boss'))
                                 elif col == BIG_FROG: 
                                     monster_name = 'big_frog'
-                                    self.dialog_spots.append((x, y, 'boss'))
+                                    self.dialog_spots.append((x, y, 'boss_frog'))
+                                    self.dialog_spots.append((x, y, 'narrator_boss_frog'))
                                 elif col == GIANT_FLAM: 
                                     monster_name = 'giant_flam'
-                                    self.dialog_spots.append((x, y, 'boss'))
+                                    self.dialog_spots.append((x, y, 'boss_flam'))
+                                    self.dialog_spots.append((x, y, 'narrator_boss_flam'))
                                 elif col == GIANT_SPIRIT: 
                                     monster_name = 'giant_spirit'
-                                    self.dialog_spots.append((x, y, 'boss'))
+                                    self.dialog_spots.append((x, y, 'boss_spirit'))
+                                    self.dialog_spots.append((x, y, 'narrator_boss_spirit'))
                                 elif col == EYE: monster_name = 'eye'
                                 elif col == FLAM: monster_name = 'flam'
                                 elif col == MUSHROOM: monster_name = 'mushroom'
@@ -110,7 +113,8 @@ class Level:
                                 elif col == CYCLOP: monster_name = 'cyclop'
                                 elif col == GIANT_RACCOON: 
                                     monster_name = 'giant_raccoon'
-                                    self.dialog_spots.append((x, y, 'boss'))
+                                    self.dialog_spots.append((x, y, 'boss_raccoon'))
+                                    self.dialog_spots.append((x, y, 'narrator_boss_raccoon'))
                                 else : monster_name = 'squid'
                                 Enemy(monster_name,
                                       (x,y),
@@ -118,10 +122,33 @@ class Level:
                                       self.obstacle_sprites,
                                       self.damage_player,
                                       self.trigger_death_particles,
+                                      self.trigger_damage_particles,
                                       self.add_xp,
                                       self.player,
                                       self)
-                                
+    
+    def check_dialogs(self):
+        if self.dialog_spots == []:
+            self.dialog_box.messages = []
+            self.dialog_pause = True
+            self.dialog_topic = 'END'
+        for location in self.dialog_spots:
+            if abs(location[0] - self.player.rect.x) < 170 and abs(location[1] - self.player.rect.y) < 170:
+                for loc in self.dialog_spots:
+                    if loc[2] == location[2]:
+                        self.dialog_spots.remove(loc)
+                self.dialog_pause = True
+                self.dialog_box.messages = []
+                self.dialog_topic = location[2]
+            elif abs(location[0] - self.player.rect.x) < 350 and abs(location[1] - self.player.rect.y) < 350 and location[2].split('_')[0] == 'narrator':
+                for loc in self.dialog_spots:
+                    if loc[2] == location[2]:
+                        self.dialog_spots.remove(loc)
+                self.dialog_box.messages = []
+                self.dialog_pause = True
+                self.dialog_topic = location[2]
+                
+                      
     def destroy_attack(self):
         if self.current_attack:
             self.current_attack.kill()
@@ -165,6 +192,9 @@ class Level:
     def trigger_death_particles(self, pos, particle_type):
         self.animation_player.create_particles(particle_type, pos, [self.visible_sprites], 'death')
         
+    def trigger_damage_particles(self, pos, damage):
+        debug(damage)
+        
     def footstep_particles(self, pos, direction):
         if direction == 'up':
             self.animation_player.create_particles('footstep_up', pos, [self.visible_sprites], 'footstep')
@@ -184,11 +214,12 @@ class Level:
     def run(self):
         self.visible_sprites.custom_draw(self.player)
         self.ui.display(self.player)
+        self.check_dialogs()
         
         if self.game_paused:
             self.upgrade.display()
         elif self.dialog_pause:
-            self.dialog_box.display()
+            self.dialog_box.display(self.dialog_topic)
         else:
             self.visible_sprites.update()
             self.visible_sprites.enemy_update(self.player)

@@ -1,88 +1,40 @@
 delimiter = "####"
 
-atributes = {
-    "name":"",
-    "gender":"",
-    "age":"",
-    "motivation":"",
-    "life_story":"",
-    "special_character_treits":"",
-    "catch_phrase":""
-}
+atributes = "atributes= {\
+    'name':'',\
+    'gender':'',\
+    'age':'',\
+    'motivation':'',\
+    'life_story':'',\
+    'catch_phrase':''\
+    }"
 
 characters = {
-    "main_character":"",
-    "first_boss":"",
-    "secound_boss":"",
-    "final_boss":""
-}
-
-stages = {
-    "start":"Its the begining of the game introduce the player to who is our main hero, what are his/her motivations for going\
-                introduce our story",
-    "before_first_boss":f"The fight with fist boss is coming, describe who the boss is what are his\
-                    abilities, and why he wants to fight info about boss: ###{boss_attributes}###",
-    "after_first_boss":"",
-    "before_secound_boss":"",
-    "after_secound_boss":"",
-    "before_final_boss":"",
-    "ending":""
+    "main_character": {
+                        "name": "Eleanor",
+                        "gender": "Female",
+                        "age": "27",
+                        "motivation": "To uncover the truth behind her father's mysterious disappearance.",
+                        "life_story": "Born in a small village, Eleanor grew up hearing stories of her father's \
+                            legendary adventures as an explorer. He vanished without a trace when she was just a \
+                                child. Determined to follow in his footsteps and find out what happened, Eleanor \
+                                    has trained tirelessly in combat and survival skills.",
+                        "catch_phrase": "Adventure awaits, and I'm ready to uncover the secrets of the past!"
+                    },
+    "boss_flame":"",
+    "boss_spirit":"",
+    "boss_frog":"",
+    "boss_raccoon":""
 }
 
 world_description = ""
 
-text = f"""
-You should express what you want a model to do by \ 
-providing instructions that are as clear and \ 
-specific as you can possibly make them. \ 
-This will guide the model towards the desired output, \ 
-and reduce the chances of receiving irrelevant \ 
-or incorrect responses. Don't confuse writing a \ 
-clear prompt with writing a short prompt. \ 
-In many cases, longer prompts provide more clarity \ 
-and context for the model, which can lead to \ 
-more detailed and relevant outputs.
-"""
-prompt = f"""
-Summarize the text delimited by triple backticks \ 
-into a single sentence.
-```{text}```
-"""
+get_main_character = f"Your task is to create atributes of the main character of the computer RPG game with given in triple backticks atributes names \
+                        Your answer should be provided in json format in the same order as it was provided to you, provide only the filled json file dont \
+                            write anything else only json, here are the atributtes ### \
+                        {atributes}###"
 
+start_prompt = f"you are a narrator in a computer single player rpg game, your narrating style is provocative and at the same\
+                time funny (something like deathpool). make an introductin to this game here are information about main character {characters['main_character']}"
+                
 
-system_message = f"""
-You will be provided with customer service queries. \
-The customer service query will be delimited with \
-{delimiter} characters.
-Classify each query into a primary category \
-and a secondary category. 
-Provide your output in json format with the \
-keys: primary and secondary.
-
-Primary categories: Billing, Technical Support, \
-Account Management, or General Inquiry.
-
-Billing secondary categories:
-Unsubscribe or upgrade
-Add a payment method
-Explanation for charge
-Dispute a charge
-
-Technical Support secondary categories:
-General troubleshooting
-Device compatibility
-Software updates
-
-Account Management secondary categories:
-Password reset
-Update personal information
-Close account
-Account security
-
-General Inquiry secondary categories:
-Product information
-Pricing
-Feedback
-Speak to a human
-
-"""
