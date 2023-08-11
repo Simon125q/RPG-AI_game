@@ -1,5 +1,5 @@
 delimiter = "####"
-
+boss = ''
 atributes = "atributes= {\
     'name':'',\
     'gender':'',\
@@ -27,7 +27,13 @@ characters = {
     "boss_raccoon":""
 }
 
-world_description = ""
+boss_description = {
+    'giant_spirit': "giant spitit located in the woods in circle made of stone",
+    'giant_flame': "giant flame located on a desert in a circle made of stone",
+    'giant_raccoons': "group of giant raccoons located on a snow desert",
+    'giant_raccoon': "giant dark raccoon located on an island with blooming cherry trees",
+    'giant_frog': "group of red giant frogs located near swamp and graveyard "
+}
 
 get_main_character = f"Your task is to create atributes of the main character of the computer RPG game with given in triple backticks atributes names \
                         Your answer should be provided in json format in the same order as it was provided to you, provide only the filled json file dont \
@@ -36,5 +42,9 @@ get_main_character = f"Your task is to create atributes of the main character of
 
 start_prompt = f"you are a narrator in a computer single player rpg game, your narrating style is provocative and at the same\
                 time funny (something like deathpool). make an introductin to this game here are information about main character {characters['main_character']}"
+
+boss_narration_prompt = f"you are a narrator in a computer single player rpg game, your narrating style is provocative and at the same time funny (something like deathpool). \
+    The main player is coming close to fight with next boss which will be {boss_description[boss]} your task is to introduce player with who he will fight and present \
+        some story about the boss. It is not fight yet"
                 
 

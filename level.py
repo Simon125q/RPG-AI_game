@@ -91,17 +91,19 @@ class Level:
                                 elif col == SPIRIT: monster_name = 'spirit'
                                 elif col == RACCOON: 
                                     monster_name = 'raccoon'
+                                    #self.dialog_spots.append((x, y, 'boss_winter_raccoon'))
+                                    self.dialog_spots.append((x, y, 'narrator_boss_winter_raccoon'))
                                 elif col == BIG_FROG: 
                                     monster_name = 'big_frog'
-                                    self.dialog_spots.append((x, y, 'boss_frog'))
+                                    #self.dialog_spots.append((x, y, 'boss_frog'))
                                     self.dialog_spots.append((x, y, 'narrator_boss_frog'))
                                 elif col == GIANT_FLAM: 
                                     monster_name = 'giant_flam'
-                                    self.dialog_spots.append((x, y, 'boss_flam'))
+                                    #self.dialog_spots.append((x, y, 'boss_flam'))
                                     self.dialog_spots.append((x, y, 'narrator_boss_flam'))
                                 elif col == GIANT_SPIRIT: 
                                     monster_name = 'giant_spirit'
-                                    self.dialog_spots.append((x, y, 'boss_spirit'))
+                                    #self.dialog_spots.append((x, y, 'boss_spirit'))
                                     self.dialog_spots.append((x, y, 'narrator_boss_spirit'))
                                 elif col == EYE: monster_name = 'eye'
                                 elif col == FLAM: monster_name = 'flam'
@@ -113,7 +115,7 @@ class Level:
                                 elif col == CYCLOP: monster_name = 'cyclop'
                                 elif col == GIANT_RACCOON: 
                                     monster_name = 'giant_raccoon'
-                                    self.dialog_spots.append((x, y, 'boss_raccoon'))
+                                    #self.dialog_spots.append((x, y, 'boss_raccoon'))
                                     self.dialog_spots.append((x, y, 'narrator_boss_raccoon'))
                                 else : monster_name = 'squid'
                                 Enemy(monster_name,
@@ -193,6 +195,7 @@ class Level:
         self.animation_player.create_particles(particle_type, pos, [self.visible_sprites], 'death')
         
     def trigger_damage_particles(self, pos, damage):
+        
         debug(damage)
         
     def footstep_particles(self, pos, direction):

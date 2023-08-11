@@ -1,6 +1,7 @@
 import pygame
 from settings import *
 from texts import *
+import pyttsx3
 
 class Dialog_box:
     def __init__(self, level):
@@ -34,7 +35,7 @@ class Dialog_box:
         paragraph = []
         line = ''
         for word in message.split(' '):
-            if len(line + word) + 1 <= self.chars_line_length:
+            if len(line + word) <= self.chars_line_length:
                 line = line + ' ' + word
             else:
                 lines.append(line)
@@ -43,10 +44,11 @@ class Dialog_box:
         
         paragraph_height = 0
         for line in lines:
-            if paragraph_height + 2 <= (self.height - DIALOG_MARGIN * 2) / LINE_HEIGHT - 2:
+            if paragraph_height + 1 <= (self.height - DIALOG_MARGIN * 2) / LINE_HEIGHT - 2:
                 paragraph.append(line)
                 paragraph_height += 1
             else:
+                paragraph.append('...')
                 self.messages.append(paragraph)
                 paragraph = [line]
                 paragraph_height = 0
@@ -59,7 +61,7 @@ class Dialog_box:
             self.cut_messages(DIALOGS[event])
         
         self.input()
-        text_speed = 1
+        text_speed = 2
         
         self.paragraph = self.messages[self.active_message]
         
@@ -79,7 +81,7 @@ class Dialog_box:
                 
             if line_done:
                 self.text_surf = self.font.render(text_line[0: self.line_counter // text_speed], True, DIALOG_FONT_COLOR)
-                self.text_rect = self.text_surf.get_rect(center = (self.top_rect.centerx, self.top_rect.y + (self.line+1) * LINE_HEIGHT + DIALOG_MARGIN))
+                self.text_rect = self.text_surf.get_rect(topleft = (self.top_rect.left + 6 * DIALOG_MARGIN, self.top_rect.y + (self.line+1) * LINE_HEIGHT + DIALOG_MARGIN))
                 self.to_show.append((self.text_surf, self.text_rect))
                 self.text_surf = self.font.render('', True, DIALOG_FONT_COLOR)
                 self.line_counter = 0
@@ -87,7 +89,7 @@ class Dialog_box:
                 
             else:
                 self.text_surf = self.font.render(text_line[0: self.line_counter // text_speed], True, DIALOG_FONT_COLOR)
-                self.text_rect = self.text_surf.get_rect(center = (self.top_rect.centerx, self.top_rect.y + (self.line + 1) * LINE_HEIGHT + DIALOG_MARGIN))
+                self.text_rect = self.text_surf.get_rect(topleft = (self.top_rect.left + 6 * DIALOG_MARGIN, self.top_rect.y + (self.line + 1) * LINE_HEIGHT + DIALOG_MARGIN))
         self.draw()
         
     def draw(self):

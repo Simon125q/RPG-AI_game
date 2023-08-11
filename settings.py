@@ -90,9 +90,9 @@ weapon_data = {
 	'sword': {'cooldown': 100, 'min_damage': 10, 'max_damage': 15,'graphic':'./graphics/weapons/sword/full.png'},
 	'lance': {'cooldown': 400, 'min_damage': 15, 'max_damage': 30,'graphic':'./graphics/weapons/lance/full.png'},
 	'axe': {'cooldown': 300, 'min_damage': 15, 'max_damage': 20, 'graphic':'./graphics/weapons/axe/full.png'},
-	'rapier':{'cooldown': 50, 'min_damage': 15, 'max_damage': 8, 'graphic':'./graphics/weapons/rapier/full.png'},
-	'sai':{'cooldown': 80, 'min_damage': 15, 'max_damage': 10, 'graphic':'./graphics/weapons/sai/full.png'},
- 	'hammer':{'cooldown': 1000, 'min_damage': 15, 'max_damage': 45, 'graphic':'./graphics/weapons/hammer/full.png'},
+	'rapier':{'cooldown': 50, 'min_damage': 5, 'max_damage': 8, 'graphic':'./graphics/weapons/rapier/full.png'},
+	'sai':{'cooldown': 80, 'min_damage': 8, 'max_damage': 10, 'graphic':'./graphics/weapons/sai/full.png'},
+ 	'hammer':{'cooldown': 1000, 'min_damage': 20, 'max_damage': 45, 'graphic':'./graphics/weapons/hammer/full.png'},
   	'big_sword':{'cooldown': 400, 'min_damage': 15, 'max_damage': 30, 'graphic':'./graphics/weapons/big_sword/full.png'},
    	'fork':{'cooldown': 350, 'min_damage': 15, 'max_damage': 25, 'graphic':'./graphics/weapons/fork/full.png'},}
 # magic
