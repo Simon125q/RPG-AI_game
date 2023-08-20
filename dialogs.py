@@ -1,6 +1,6 @@
 import pygame
 from settings import *
-from texts import *
+from prompts import *
 import pyttsx3
 
 class Dialog_box:
