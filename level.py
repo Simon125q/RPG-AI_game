@@ -12,6 +12,7 @@ from particles import AnimationPlayer
 from magic import PlayerMagic
 from upgrade import Upgrade
 from dialogs import Dialog_box
+from ai import Dialog_AI
 
 
 class Level:
@@ -29,6 +30,7 @@ class Level:
         self.attack_sprites = pygame.sprite.Group()
         self.attackable_sprites = pygame.sprite.Group()
         # dialogs
+        self.dialog_ai = Dialog_AI()
         self.dialog_box = Dialog_box(self)
         self.dialog_pause = False
         self.dialog_spots = []
@@ -135,13 +137,15 @@ class Level:
             self.dialog_pause = True
             self.dialog_topic = 'END'
         for location in self.dialog_spots:
-            if abs(location[0] - self.player.rect.x) < 170 and abs(location[1] - self.player.rect.y) < 170:
+            if abs(location[0] - self.player.rect.x) < 200 and abs(location[1] - self.player.rect.y) < 200:
                 for loc in self.dialog_spots:
                     if loc[2] == location[2]:
                         self.dialog_spots.remove(loc)
                 self.dialog_pause = True
                 self.dialog_box.messages = []
                 self.dialog_topic = location[2]
+                self.dialog_ai.generate_dialog(self.dialog_topic)
+                #------------->
             elif abs(location[0] - self.player.rect.x) < 350 and abs(location[1] - self.player.rect.y) < 350 and location[2].split('_')[0] == 'narrator':
                 for loc in self.dialog_spots:
                     if loc[2] == location[2]:
@@ -149,6 +153,8 @@ class Level:
                 self.dialog_box.messages = []
                 self.dialog_pause = True
                 self.dialog_topic = location[2]
+                self.dialog_ai.generate_dialog(self.dialog_topic)
+                #------------->
                 
                       
     def destroy_attack(self):
