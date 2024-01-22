@@ -60,8 +60,8 @@ get_main_character = f"Your task is to create atributes of the main character of
 start_prompt = f"you are a narrator in a computer single player rpg game, your narrating style is provocative and at the same\
                 time funny (something like deathpool). make an introductin to this game here are information about main character {characters['main_character']}"
 
-boss_narration_prompt = f"you are a narrator in a computer single player rpg game, your narrating style is provocative and at the same time funny (something like deathpool). \
-    The main player is coming close to fight with next boss which will be {boss_description[boss]} your task is to introduce player with who he will fight and present \
-        some story about the boss. It is not fight yet"
+# boss_narration_prompt = f"you are a narrator in a computer single player rpg game, your narrating style is provocative and at the same time funny (something like deathpool). \
+#     The main player is coming close to fight with next boss which will be {boss_description[boss]} your task is to introduce player with who he will fight and present \
+#     some story about the boss. It is not fight yet"
                 
 

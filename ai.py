@@ -5,13 +5,14 @@ import pygame.freetype
 import sys
 from settings import *
 from prompts import *
-
+from dotenv import load_dotenv, find_dotenv
 
 class Dialog_AI:
     def __init__(self):
-        from dotenv import load_dotenv, find_dotenv
+        
         _ = load_dotenv(find_dotenv())
-        self.openai.api_key  = os.getenv('OPENAI_API_KEY')
+        
+        openai.api_key = os.getenv('OPENAI_API_KEY')
 
     def generate_dialog(self, action):
         if action == 'START':

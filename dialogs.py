@@ -1,7 +1,7 @@
 import pygame
 from settings import *
 from prompts import *
-import pyttsx3
+
 
 class Dialog_box:
     def __init__(self, level):
