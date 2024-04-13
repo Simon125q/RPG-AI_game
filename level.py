@@ -102,7 +102,7 @@ class Level:
                                 elif col == GIANT_FLAM: 
                                     monster_name = 'giant_flam'
                                     #self.dialog_spots.append((x, y, 'boss_flam'))
-                                    self.dialog_spots.append((x, y, 'narrator_boss_flam'))
+                                    self.dialog_spots.append((x, y, 'narrator_boss_flame'))
                                 elif col == GIANT_SPIRIT: 
                                     monster_name = 'giant_spirit'
                                     #self.dialog_spots.append((x, y, 'boss_spirit'))

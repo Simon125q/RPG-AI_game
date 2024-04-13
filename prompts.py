@@ -45,11 +45,11 @@ characters = {
 }
 
 boss_description = {
-    'giant_spirit': "giant spitit located in the woods in circle made of stone",
-    'giant_flame': "giant flame located on a desert in a circle made of stone",
-    'giant_raccoons': "group of giant raccoons located on a snow desert",
-    'giant_raccoon': "giant dark raccoon located on an island with blooming cherry trees",
-    'giant_frog': "group of red giant frogs located near swamp and graveyard "
+    'boss_spirit': "giant spitit located in the woods in circle made of stone",
+    'boss_flame': "giant flame located on a desert in a circle made of stone",
+    'boss_winter_raccoon': "group of giant raccoons located on a snow desert",
+    'boss_raccoon': "giant dark raccoon located on an island with blooming cherry trees",
+    'boss_frog': "group of red giant frogs located near swamp and graveyard "
 }
 
 get_main_character = f"Your task is to create atributes of the main character of the computer RPG game with given in triple backticks atributes names \

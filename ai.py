@@ -19,8 +19,7 @@ class Dialog_AI:
             characters['main_character'] = self.create_character(atributes, 'main character')
             DIALOGS['START'] = self.start()
         elif 'narrator' in action:
-            action.replace('narrator_', '')
-            DIALOGS[action] = self.narrate(action)
+            DIALOGS[action] = self.narrate(action.replace('narrator_', ''))
             
     def get_completion(self, prompt, model="gpt-3.5-turbo", temperature = 0):
         messages = [{"role": "user", "content": prompt}]
