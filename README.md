@@ -1,7 +1,7 @@
 # RPG AI Game
 
 ## Overview
-This project is a Role-Playing Game (RPG) developed in Python using the Pygame module and the OpenAI API. It features dynamic dialogues and narrations generated in real-time by OpenAI's GPT models, ensuring a unique gameplay experience during each session.
+This project is a RPG game developed in Python using the Pygame module and the OpenAI API. It features dynamic dialogues and narrations generated in real-time by OpenAI's GPT models, ensuring a unique gameplay experience during each session.
 
 ## Key Features
 - **Dynamic Content Generation:** Leveraging the OpenAI API, the game generates unique dialogs and story narrations, making each playthrough distinct and unpredictable.
@@ -17,10 +17,7 @@ To run the RPG game, follow these steps:
    pip install pygame
    pip install openai
    ```
-3. Clone the repository:
-   ```
-   git clone https://github.com/<your-username>/RPG-AI_game.git
-   ```
+3. Clone the repository
 4. Navigate to the project directory:
    ```
    cd RPG-AI_game
