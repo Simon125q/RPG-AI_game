@@ -1,9 +1,38 @@
-# RPG game
-RPG game written in python with use of pygame module and openAI API to generate dialogs and narrations on the fly, so the gameplay is different every time.
-To run the app you must create .env file containing OPENAI_API_KEY variable with API key.
+# RPG AI Game
+
+## Overview
+This project is a Role-Playing Game (RPG) developed in Python using the Pygame module and the OpenAI API. It features dynamic dialogues and narrations generated in real-time by OpenAI's GPT models, ensuring a unique gameplay experience during each session.
+
+## Key Features
+- **Dynamic Content Generation:** Leveraging the OpenAI API, the game generates unique dialogs and story narrations, making each playthrough distinct and unpredictable.
+- **Built with Pygame:** Utilizes Python’s Pygame library for managing game visuals, event handling, and media.
 
 
+## Installation
 
+To run the RPG game, follow these steps:
+1. Ensure you have Python installed on your system. You can download Python [here](https://www.python.org/downloads/).
+2. Install Pygame and openAI api via pip:
+   ```
+   pip install pygame
+   pip install openai
+   ```
+3. Clone the repository:
+   ```
+   git clone https://github.com/<your-username>/RPG-AI_game.git
+   ```
+4. Navigate to the project directory:
+   ```
+   cd RPG-AI_game
+   ```
+5. Create a `.env` file in the root directory and insert the following line:
+   ```
+   OPENAI_API_KEY='Your-OpenAI-API-Key-Here'
+   ```
+6. Run the game using Python:
+   ```
+   python main.py
+   ```
 
 https://github.com/Simon125q/RPG-AI_game/assets/106029626/2ff5d9a5-dad9-4f4e-89de-506dfc628271
 
@@ -24,3 +53,7 @@ https://github.com/Simon125q/RPG-AI_game/assets/106029626/de8de9de-bce5-4ce3-896
 ![rpg_pic3](https://github.com/Simon125q/RPG-AI_game/assets/106029626/3f6c03d3-a962-4693-ae31-f58f9d07d9a9)
 ![rpg_pic4](https://github.com/Simon125q/RPG-AI_game/assets/106029626/25a5cfbb-6c8f-4f48-a1f6-93d56e43e842)
 ![menu](https://github.com/Simon125q/RPG-AI_game/assets/106029626/b3f7b627-856b-4181-a3ed-fc998a10a1dd)
+
+## What This Project Taught Me
+
+This project was a fascinating journey into the world of game development and artificial intelligence. Utilizing the OpenAI GPT models taught me the complexities and potential of AI in generating creative content. It sharpened my skills in Python and introduced me to the practical applications of APIs in software development. Handling graphics with Pygame improved my understanding of game loops, event handling, and rendering processes. This project underscores the importance of integrating AI with traditional software solutions to create dynamic and engaging user experiences. It also highlights the power of Python in prototyping and developing complex applications efficiently.
